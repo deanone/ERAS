@@ -1,0 +1,7 @@
+# Don't track content of these directories
+
+# Specific file types #
+###################
+*.out
+*.properties
+*.txt
