@@ -1,21 +1,44 @@
+#ifndef ERAS_H
+#define ERAS_H
+
 #include <string>
 #include "DataTypes.h"
 #include "Report.h"
 
-//model based on http://digital.cs.usu.edu/~erbacher/publications/Bayes-Vikas2.pdf
-namespace ERAS{
-	std::string GetExecutablePath(); 
-	std::string GetExecutablePathAndMatchItWithFilename(std::string ffname);
-	void FindMeanAndStdDevOfVector(const DoubleVector& v, double& Mean, double& StdDev);
-	double IQR(DoubleVector v);//Interquartile range
-	void HistogramCreator(const DoubleVector& input,const BoolVector& states,int typeOfBinsEstimation,int fixedNumOfBins, HISTOGRAM& histogram);
-	int BinsEstimationByRule(const DoubleVector& input,int typeOfBinEstimation);
-	int BinsEstimationRule_2(int n);//Square-root choice
-	int BinsEstimationRule_3(int n);//Sturges' formula
-	int BinsEstimationRule_4(int n);//Rice Rule
-	int BinsEstimationRule_5(const DoubleVector& input);//Scott's normal reference rule
-	int BinsEstimationRule_6(DoubleVector input);//Freedman–Diaconis' choice
-	double BayesProbabilityCalculator(HISTOGRAM& histogram,const double& val);
-	double ScoreCalculator(const DoubleVector& bayesProbs);
-	double SpamProbabilityCalculator(Report *inReport,std::vector<Report*> pastReports,bool UseJudgements,int typeOfBinsEstimation,int fixedNumOfBins);
+// model based on http://digital.cs.usu.edu/~erbacher/publications/Bayes-Vikas2.pdf
+namespace ERAS
+{
+	std::string getExecutablePath(); 
+	std::string getExecutablePathAndMatchItWithFilename(const std::string& fileName);
+	
+	void findMeanAndStdDevOfVector(const DoubleVector& v, double& mean, double& stdDev);
+
+	//	Interquartile range
+	double IQR(DoubleVector v);
+	
+	void histogramCreator(const DoubleVector &input, const BoolVector& states, int typeOfBinsEstimation, int fixedNumOfBins, HISTOGRAM &histogram);
+	
+	// Bin estimation rules
+	int binsEstimationByRule(const DoubleVector &input, int typeOfBinEstimation);
+	
+	//	Square-root choice
+	int binsEstimationRule_2(int n);
+	
+	//	Sturges' formula
+	int binsEstimationRule_3(int n);
+	
+	//	Rice Rule
+	int binsEstimationRule_4(int n);
+	
+	//	Scott's normal reference rule
+	int binsEstimationRule_5(const DoubleVector &input);
+	
+	//	Freedman–Diaconis' choice
+	int binsEstimationRule_6(DoubleVector input);
+	
+	double bayesProbabilityCalculator(HISTOGRAM &histogram, const double &val);
+	double scoreCalculator(const DoubleVector &bayesProbs);
+	double spamProbabilityCalculator(Report *inReport, std::vector<Report*> pastReports, bool useJudgements, int typeOfBinsEstimation, int fixedNumOfBins);
 }
+
+#endif	//	ERAS_H

@@ -1,99 +1,135 @@
 #include <fstream>
 #include <sstream>
+
 #include "PropertiesParser.h"
 
-
-PropertiesParser::PropertiesParser(std::string propertiesFilename){
-	AddPropertiesFile(propertiesFilename);
+PropertiesParser::PropertiesParser(std::string propertiesFilename)
+{
+	addPropertiesFile(propertiesFilename);
 }
 
-void PropertiesParser::AddPropertiesFile(std::string propertiesFilename){
+void PropertiesParser::addPropertiesFile(std::string propertiesFilename)
+{
 	std::ifstream properties_file;
 	properties_file.open(propertiesFilename.c_str(), std::ios::in);
 	std::string line;
-	if (properties_file.good()){
-		while (properties_file.eof() == false){
+	if (properties_file.good())
+	{
+		while (properties_file.eof() == false)
+		{
 			line.clear();
 			getline(properties_file, line);
-			if (line.length() > 0 && line[0] != '#'){
+			if (line.length() > 0 && line[0] != '#')
+			{
 				std::string propertyName;
 				std::string propertyValue;
 				std::stringstream ss(line);
 				char c;//c used to eat the '=' character
 				ss >> propertyName >> c >> propertyValue;
-				PropMap[propertyName] = propertyValue;
+				propMap[propertyName] = propertyValue;
 			}
 		}
 	}
 	properties_file.close();
 }
 
-bool PropertiesParser::PropertyExists(std::string propertyName){
-	return (!(PropMap.find(propertyName) == PropMap.end()));
+bool PropertiesParser::propertyExists(std::string propertyName)
+{
+	return (!(propMap.find(propertyName) == propMap.end()));
 }
 
-std::string PropertiesParser::GetPropertyAsString(std::string propertyName){
-	return PropMap[propertyName];
+std::string PropertiesParser::getPropertyAsString(std::string propertyName)
+{
+	return propMap[propertyName];
 }
 
-int PropertiesParser::GetPropertyAsInt(std::string propertyName){
+int PropertiesParser::getPropertyAsInt(std::string propertyName)
+{
 	int propertyValue;
-	std::stringstream strStream(PropMap[propertyName]);
+	std::stringstream strStream(propMap[propertyName]);
 	strStream >> propertyValue;
 	return propertyValue;
 }
 
-bool PropertiesParser::GetPropertyAsBool(std::string propertyName){
+bool PropertiesParser::getPropertyAsBool(std::string propertyName)
+{
 	bool propertyValue;
-	propertyValue = (PropMap[propertyName] == "true");
+	propertyValue = (propMap[propertyName] == "true");
 	return propertyValue;
 }
 
-double PropertiesParser::GetPropertyAsFloat(std::string propertyName){
+double PropertiesParser::getPropertyAsFloat(std::string propertyName)
+{
 	double propertyValue;
-	std::stringstream strStream(PropMap[propertyName]);
+	std::stringstream strStream(propMap[propertyName]);
 	strStream >> propertyValue;
 	return propertyValue;
 }
 
-double PropertiesParser::GetPropertyAsDouble(std::string propertyName){
+double PropertiesParser::getPropertyAsDouble(std::string propertyName)
+{
 	double propertyValue;
-	std::stringstream strStream(PropMap[propertyName]);
+	std::stringstream strStream(propMap[propertyName]);
 	strStream >> propertyValue;
 	return propertyValue;
 }
 
-std::string PropertiesParser::GetPropertyAsStringOrDefaultTo(std::string propertyName, std::string defaultPropertyValue){
-	if (PropertyExists(propertyName))
-		return GetPropertyAsString(propertyName);
+std::string PropertiesParser::getPropertyAsStringOrDefaultTo(std::string propertyName, std::string defaultPropertyValue)
+{
+	if (propertyExists(propertyName))
+	{
+		return getPropertyAsString(propertyName);
+	}
 	else
+	{
 		return defaultPropertyValue;
+	}
 }
 
-int PropertiesParser::GetPropertyAsIntOrDefaultTo(std::string propertyName, int defaultPropertyValue){
-	if (PropertyExists(propertyName))
-		return GetPropertyAsInt(propertyName);
+int PropertiesParser::getPropertyAsIntOrDefaultTo(std::string propertyName, int defaultPropertyValue)
+{
+	if (propertyExists(propertyName))
+	{
+		return getPropertyAsInt(propertyName);
+	}
 	else
+	{
 		return defaultPropertyValue;
+	}
 }
 
-bool PropertiesParser::GetPropertyAsBoolOrDefaultTo(std::string propertyName, bool defaultPropertyValue){
-	if (PropertyExists(propertyName))
-		return GetPropertyAsBool(propertyName);
+bool PropertiesParser::getPropertyAsBoolOrDefaultTo(std::string propertyName, bool defaultPropertyValue)
+{
+	if (propertyExists(propertyName))
+	{
+		return getPropertyAsBool(propertyName);
+	}
 	else
+	{
 		return defaultPropertyValue;
+	}
 }
 
-double PropertiesParser::GetPropertyAsFloatOrDefaultTo(std::string propertyName, double defaultPropertyValue){
-	if (PropertyExists(propertyName))
-		return GetPropertyAsFloat(propertyName);
+double PropertiesParser::getPropertyAsFloatOrDefaultTo(std::string propertyName, double defaultPropertyValue)
+{
+	if (propertyExists(propertyName))
+	{
+		return getPropertyAsFloat(propertyName);
+	}
 	else
+	{
 		return defaultPropertyValue;
+	}
 }
 
-double PropertiesParser::GetPropertyAsDoubleOrDefaultTo(std::string propertyName, double defaultPropertyValue){
-	if (PropertyExists(propertyName))
-		return GetPropertyAsDouble(propertyName);
+double PropertiesParser::getPropertyAsDoubleOrDefaultTo(std::string propertyName, double defaultPropertyValue)
+{
+	if (propertyExists(propertyName))
+	{
+		return getPropertyAsDouble(propertyName);
+	}
 	else
+	{
 		return defaultPropertyValue;
+	}
 }
